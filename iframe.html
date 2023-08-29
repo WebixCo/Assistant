@@ -1,0 +1,43 @@
+<body>
+
+  <style>
+    body {
+      background-color: blue;
+    }
+  </style>
+  <iframe onload='' id='gResults' width="500px" height="1000px" src=""></iframe>
+
+
+  <script>
+    var ans;
+    var gResIframe = document.getElementById("gResults")
+    function wait(waitsecs) {
+      setTimeout(donothing(), waitsecs);
+    }
+
+    function donothing() {
+      //
+    }
+
+
+    function httpGet(theUrl) {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", theUrl, false); // false for synchronous request
+      xmlHttp.send(null);
+      return xmlHttp.responseText;
+    }
+    function getResult() {
+      url = encodeURI("http://www.google.com/search?q=" + prompt())
+      ress = httpGet("https://api.allorigins.win/raw?url=https://www.whateverorigin.org/get?url=" + url)
+      ress = JSON.parse(ress)
+      gResIframe.srcdoc = ress.contents
+      var doc = document.createElement('html');
+      doc.innerHTML = ress.contents
+      ans = doc.getElementsByClassName("AP7Wnd")[1].innerText
+      ans1 = ans.replaceAll(" ", "")
+      return ans1;
+      if(ans)
+    }
+    console.log(getResult())
+  </script>
+</body>

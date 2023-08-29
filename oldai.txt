@@ -1,0 +1,47 @@
+if (transcript.toLowerCase().search("what are you doing") > -1) {
+            say("Being your assistant")
+            console.log("wat doing")
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + "<b>Onyx said 'Being your assistant'</b> " + "<br>";
+          }
+          else if (transcript.toLowerCase().search("open youtube") > -1) {
+            open("http://youtube.com")
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + "<b>Onyx opened YouTube</b> " + "<br>";
+            say("Opening...")
+          }
+          else if (transcript.toLowerCase().search("open google") > -1) {
+            open("http://google.com")
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + "<b>Onyx opened Google</b> " + "<br>";
+            say("Opening...")
+
+          }
+          else if (transcript.toLowerCase().search("open duckduckgo") > -1) {
+            open("http://duckduckgo.com")
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + "<b>Onyx opened DuckDuckGo</b> " + "<br>";
+            say("Opening...")
+          }
+          else if (transcript.toLowerCase().search("what is") > -1) {
+            open("http://google.com/search?q=" + encodeURIComponent(transcript))
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + "<b>Onyx asked google for '" + transcript + "'<br>";
+            say("Asking Google")
+            answer(transcript)
+          }
+          else if (transcript.toLowerCase().search("do a google search for ") > -1) {
+            transcript = transcript.toLowerCase()
+            console.log(transcript.split("do a google search for")[1].trim())
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + "<b>Onyx asked google for results to  '" + transcript.split("do a google search for") + "'<br>";
+            open("http://google.com/search?q=" + encodeURIComponent(transcript.split("do a google search for")[1].trim()))
+            say("Asking Google")
+
+          }
+          else if (transcript.toLowerCase().search("take note") > -1){
+            name = prompt("Note Name:")
+            contents = prompt("Note Contents:")
+            nnote2(name, contents);
+            say("Note created, the name of the note is "+name+" and the contents are"+contents);
+          }

@@ -1,0 +1,23 @@
+{
+  "name": "OnyxAssistant",
+  "short_name": "OnyxAssistant",
+  "start_url": "index.html",
+  "prefer_related_applications": false,
+  "scope": "/",
+  "icons": [
+    {
+      "src": "icon-for-onyx_512_launcher_v2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-for-onyx_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#272626",
+  "background_color": "#272626",
+  "display": "standalone"
+}

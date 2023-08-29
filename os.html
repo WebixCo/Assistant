@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    /* CSS comes here */
+    * {
+      font-family: 'Roboto';
+    }
+
+    body {
+      background:none;
+      color: rgb(199, 195, 195);
+      overflow: hidden;
+    }
+
+    #app {
+      font-family: arial;
+      color: rgb(199, 195, 195);
+      font-family: 'Roboto';
+      background-color: rgb(39, 38, 38);
+      align-content: center;
+      overflow-x: hidden;
+      text-align: center;
+      font-size: 10pt !important;
+    }
+
+    smalla {
+      font-size: x-small;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #6a67ce;
+      color: #FFFFFF;
+      border: 0px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #output {
+      padding: 10px;
+      margin-top: 20px;
+      line-height: 30px;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .show {
+      display: y: none;  }
+
+ 
+    #output{
+      display: none !important;
+    }   #_testpanel {
+      display: none;
+    }
+  </style>
+  <title>OXA</title>
+  <script src="intents.js"></script>
+</head>
+
+<body>
+  <center>
+    <p><button type="button" onclick="runSpeechRecognition()"><svg xmlns="http://www.w3.org/2000/svg"
+          enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+          <g>
+            <rect fill="none" height="24" width="24"></rect>
+            <rect fill="none" height="24" width="24"></rect>
+            <rect fill="none" height="24" width="24"></rect>
+          </g>
+          <g>
+            <g></g>
+            <g>
+              <path d="M12,14c1.66,0,3-1.34,3-3V5c0-1.66-1.34-3-3-3S9,3.34,9,5v6C9,12.66,10.34,14,12,14z"></path>
+              <path
+                d="M17,11c0,2.76-2.24,5-5,5s-5-2.24-5-5H5c0,3.53,2.61,6.43,6,6.92V21h2v-3.08c3.39-0.49,6-3.39,6-6.92H17z">
+              </path>
+            </g>
+          </g>
+        </svg></button> &nbsp;<br> <span id="action"></span></p>
+    <div id="output" class="hide"></div>
+    <script>
+      let pingsfx = new Audio("https://onyxassistant.samdevsapps.repl.co/ping.mp3")
+      localStorage.removeItem("debug")
+      w = window.outerWidth / 2
+      h = window.outerHeight / 2
+      var left = window.outerWidth / 2 + window.screenX - (w / 2);
+      var top = window.outerHeight / 2 + window.screenY - (h / 2);
+      var myWindow = window
+      var ch = new BroadcastChannel('test');
+      let count = Number(window.localStorage.getItem("count"));
+      if (!count) {
+  window.localStorage.setItem("count", "0");
+}
+      function say(txt){
+        const speach = new SpeechSynthesisUtterance(txt);
+        [speach.voice] = speechSynthesis.getVoices();
+        speechSynthesis.speak(speach);
+      }
+      function cmds() {
+          var myWindow = window.open("./cmds.html", "MsgWindow", "width=" + w + ",height=" + h + ', top=' + top + ', left=' + left);
+      }
+      function nnote(){
+        let notename = prompt("Note Name");
+        let notetext = prompt("Note Text");
+        localStorage.setItem(notename, notetext);
+        localStorage.setItem('count', parseInt(localStorage.getItem('count'))+1);
+      }
+      function nnote2(notename, notetext){
+        localStorage.setItem(notename, notetext);
+        localStorage.setItem('count', parseInt(localStorage.getItem('count'))+1);
+      }
+      function httpGet(theUrl) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", theUrl, false); // false for synchronous request
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+      }
+      function answer(query) {
+        open('https://www.google.com/search?q=' + encodeURIComponent(query))
+      }
+      /* JS comes here */
+      function runSpeechRecognition() {
+
+        // get output div reference
+        var output = document.getElementById("output");
+        // get action element reference
+        var action = document.getElementById("action");
+        // new speech recognition object
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        var recognition = new SpeechRecognition();
+
+        // This runs when the speech recognition service starts
+        recognition.onstart = function () {
+          action.innerHTML = "<small>listening, please speak...</small>";
+          console.log("Began listening")
+          pingsfx.play()
+        };
+
+        recognition.onspeechend = function () {
+          console.log("Stopped listening")
+          action.innerHTML = "<small>stopped listening, hope you are done...</small>";
+          recognition.stop();
+          setTimeout(console.log("ree"), 1000);
+        }
+
+        // This runs when the speech recognition service returns result
+        recognition.onresult = function (event) {
+          var transcript = event.results[0][0].transcript;
+          console.log("Got Result: " + transcript)
+          var confidence = event.results[0][0].confidence;
+          var output = document.getElementById("output");
+          output.innerHTML = output.innerHTML + "<b>You Said: </b> " + transcript + "<br>";
+          output.classList.remove("hide");
+          console.log(transcript)
+          let inp = transcript
+          if(inp.toLowerCase().search("note") > -1){
+            for (let ele of intents.NoteStuff.intents) {
+                console.log(ele)
+                console.log(intents.NoteStuff.intents.indexOf(ele))
+                if(inp.trim().toLowerCase().search(ele) > -1){
+                    console.log("Found!");
+                    cmdid = intents.NoteStuff.intents.indexOf(ele)
+                    intents.NoteStuff.commands[cmdid]();
+                    
+                }
+            }
+          }
+          if(inp.toLowerCase().search("open") > -1){
+            for (let ele of intents.Openers.intents) {
+                console.log(ele)
+                console.log(intents.Openers.intents.indexOf(ele))
+                if(inp.trim().toLowerCase().search(ele) > -1){
+                    console.log("Found!");
+                    cmdid = intents.Openers.intents.indexOf(ele)
+                    intents.Openers.commands[cmdid]();
+                    
+                }
+            }
+          }
+          if(inp.toLowerCase().search("go to") > -1){
+            for (let ele of intents.Openers.intents) {
+                console.log(ele)
+                console.log(intents.Openers.intents.indexOf(ele))
+                if(inp.trim().toLowerCase().search(ele) > -1){
+                    console.log("Found!");
+                    cmdid = intents.Openers.intents.indexOf(ele)
+                    intents.Openers.commands[cmdid]();
+                  
+                }
+            }
+          }
+          if(inp.toLowerCase().search("what") > -1){
+            for (let ele of intents.Other.intents) {
+                console.log(ele)
+                console.log(intents.Other.intents.indexOf(ele))
+                if(inp.trim().toLowerCase().search(ele) > -1){
+                    console.log("Found!");
+                    cmdid = intents.Other.intents.indexOf(ele)
+                    intents.Other.commands[cmdid](inp);
+                  
+                }
+            }
+          }
+          if(inp.toLowerCase().search("search") > -1){
+            for (let ele of intents.Other.intents) {
+                console.log(ele)
+                console.log(intents.Other.intents.indexOf(ele))
+                if(inp.trim().toLowerCase().search(ele) > -1){
+                    console.log("Found!");
+                    cmdid = intents.Other.intents.indexOf(ele)
+                    intents.Other.commands[cmdid](inp);
+                  
+                }
+            }
+    }
+          recognition.start();
+        }
+        recognition.start()
+
+      }
+
+
+        const registerServiceWorker = async () => {
+          if ("serviceWorker" in navigator) {
+            try {
+              const registration = await navigator.serviceWorker.register("/sw.js", {
+                scope: "/",
+              });
+              if (registration.installing) {
+                console.log("Service worker installing");
+              } else if (registration.waiting) {
+                console.log("Service worker installed");
+              } else if (registration.active) {
+                console.log("Service worker active");
+              }
+            } catch (error) {
+              console.error(`Registration failed with ${error}`);
+            }
+          }
+        };
+        
+        // …
+        
+        registerServiceWorker();
+    </script>
+
+</body>
+
+</html>

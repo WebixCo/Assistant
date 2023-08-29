@@ -1,0 +1,176 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+* {
+  font-family: sans-serif;
+}
+
+body {
+  
+  font-family: arial, sans-serif;
+  font-size: 100%;
+  margin: 1em;
+  background: #ffcc99;
+  color:black;
+  
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+#heading {
+}
+
+#no-notes {
+  padding: 100px 0px;
+  text-align: center;
+  display:none;
+}
+form{
+  display:none;
+}
+#ts {
+  color: #ffd31d;
+}
+
+.inputText {
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #ffd31d;
+  width: 30%;
+  margin: 15px;
+  outline: none;
+}
+
+.hidden {
+  display: none;
+}
+.seln{
+  display:none;
+}
+.btn {
+  padding: 10px;
+  border-radius: 20px;
+  border: 2px solid #ffd31d;
+  background-color: #ffd31d;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  border: 2px solid #333;
+  box-shadow: inset 0 0 5px #000000;
+}
+
+h2,
+p {
+  font-size: 100%;
+  font-weight: normal;
+}
+ul{margin:-10px !important;}
+ul,
+li {
+  list-style: none;
+}
+
+ul {
+  overflow: hidden;
+  
+}
+
+ul li a {
+  text-decoration: none;
+  color: #000;
+  background: white;
+  display: block;
+  max-height: 50px;
+  width: 80vw;
+  padding: 0.5em;
+  margin-left:-10px;
+  border-radius:10px;
+}
+
+ul li {
+  margin-left: 1em;
+  float: left;
+  position: relative;
+}
+
+ul li h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-bottom: 10px;
+  max-width: calc(10em-30px);
+}
+
+ul li p {
+
+  font-size: 1.1rem;
+  max-width: 8em;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+  overflow: hidden;
+}
+
+.delete {
+  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  border: 4px double white;
+  font-weight: bold;
+  cursor: pointer;
+  display:none;
+}
+
+ul li a {
+
+  cursor: default;
+}
+
+ul li:nth-child(even) a {
+
+  position: relative;
+  top: 5px;
+  background: #ff5733;
+  
+}
+
+ul li:nth-child(3n) a {
+
+  position: relative;
+  top: -5px;
+  background: #77d8d8;
+}
+
+ul li:nth-child(5n) a {
+
+  position: relative;
+  top: -10px;
+}
+
+ul li a:hover,
+ul li a:focus {
+
+}
+
+ol {
+  text-align: center;
+}
+
+ol li {
+  display: inline;
+  padding-right: 1em;
+}
+
+ol li a {
+  color: #fff;
+}
+

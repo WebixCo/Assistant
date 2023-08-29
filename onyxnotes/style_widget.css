@@ -1,0 +1,75 @@
+@font-face {
+  font-family: SegoeIcons;
+  src: url('Segoe%20Fluent%20Icons.ttf');
+}
+body {
+  
+  font-family: arial, sans-serif;
+  font-size: 100%;
+  margin: 1em;
+  background: #ffcc99;
+  color:black;
+  
+}
+
+.delete {
+  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  border: 4px double white;
+  font-weight: bold;
+  cursor: pointer;
+  display:none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+*{
+  list-style:none;
+}
+li > a {
+  text-decoration: none;
+  color: #000;
+  background: white;
+  display: block;
+  
+  width: 80vw;
+  margin-left: -30px !important;
+  border-radius:10px;
+  margin-bottom:0.5em;
+  padding-bottom:0.5em;
+  width:85vw;
+  height:65px;
+  
+}
+ul{
+  left:10px;
+  position:absolute;
+}
+li > a > *{
+  margin: 0; 
+  top:0px;
+  text-decoration: none; 
+  color:black;
+  overflow:hidden;
+  padding:5px;
+  margin-right:10px
+}
+.icn {
+  font-family: "SegoeIcons" !important;
+  color:white;
+  background: #4472c4;
+  border: solid 3px #2f528f;
+  border-radius: 25px;
+  padding:5px;
+  z-index: 99999;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  font-size: x-large;
+}

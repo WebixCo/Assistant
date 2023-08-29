@@ -1,0 +1,26 @@
+<script>
+  const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '6bc2dff3eamsh5c5389007d1cad9p128177jsn33b64fcfa521',
+		'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+	}
+};
+var Results;
+function ParseRes(Res){
+  console.log(Res)
+  for (let i of Res) {
+    console.log(i.name)
+  }
+}
+Query = "Pavlova"
+console.log(`https://tasty.p.rapidapi.com/recipes/list?from=0&size=5&prefix=${encodeURIComponent(Query)}`)
+fetch(`https://tasty.p.rapidapi.com/recipes/list?from=0&size=5&prefix=${encodeURIComponent(Query)}`, options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+  .then(response => Results)
+  .then(response => ParseRes(response))
+	.catch(err => console.error(err));
+
+  
+</script>
